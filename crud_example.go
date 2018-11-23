@@ -43,23 +43,50 @@ Remove a sweet
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/model"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/resource"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/storage"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/model"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/resource"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/storage"
 	_ "github.com/lib/pq"
 	"github.com/manyminds/api2go"
-	"github.com/manyminds/api2go-adapter/gingonic"
+	"github.com/manyminds/api2go/routing"
 	_ "github.com/mattn/go-sqlite3"
-	gin "gopkg.in/gin-gonic/gin.v1"
+	"net/http"
 )
+
+type ginRouter struct {
+	router *gin.Engine
+}
+
+func (g ginRouter) Handler() http.Handler {
+	return g.router
+}
+
+func (g ginRouter) Handle(protocol, route string, handler routing.HandlerFunc) {
+	wrappedCallback := func(c *gin.Context) {
+		params := map[string]string{}
+		for _, p := range c.Params {
+			params[p.Key] = p.Value
+		}
+
+		handler(c.Writer, c.Request, params, c.Keys)
+	}
+
+	g.router.Handle(protocol, route, wrappedCallback)
+}
+
+//Gin creates a new api2go router to use with the gin framework
+func Gin(g *gin.Engine) routing.Routeable {
+	return &ginRouter{router: g}
+}
 
 func main() {
 	r := gin.Default()
 	api := api2go.NewAPIWithRouting(
-		"v0",
+		"api",
 		api2go.NewStaticResolver("/"),
-		gingonic.New(r),
+		Gin(r),
 	)
 
 	db, err := storage.InitDB()
@@ -75,5 +102,5 @@ func main() {
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
-	r.Run(":31415") // listen and serve on 0.0.0.0:31415
+	r.Run(":3000") // listen and serve on 0.0.0.0:31415
 }

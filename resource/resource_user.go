@@ -6,8 +6,8 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/model"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/storage"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/model"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/storage"
 	"github.com/manyminds/api2go"
 )
 

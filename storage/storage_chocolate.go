@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/model"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/model"
 	"github.com/jinzhu/gorm"
 )
 

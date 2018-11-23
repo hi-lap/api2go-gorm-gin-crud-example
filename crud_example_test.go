@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/model"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/resource"
-	"github.com/hnakamur/api2go-gorm-gin-crud-example/storage"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/model"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/resource"
+	"github.com/hi-lap/api2go-gorm-gin-crud-example/storage"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	"github.com/manyminds/api2go"
